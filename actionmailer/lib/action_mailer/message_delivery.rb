@@ -62,7 +62,7 @@ module ActionMailer
     # * <tt>:queue</tt> - Enqueue the email on the specified queue
     # * <tt>:priority</tt> - Enqueues the email with the specified priority
     #
-    # By default, the email will be enqueued using <tt>ActionMailer::DeliveryJob</tt>. Each
+    # By default, the email will be enqueued using <tt>ActionMailer::MailDeliveryJob</tt>. Each
     # <tt>ActionMailer::Base</tt> class can specify the job to use by setting the class variable
     # +delivery_job+.
     #
@@ -88,7 +88,7 @@ module ActionMailer
     # * <tt>:queue</tt> - Enqueue the email on the specified queue.
     # * <tt>:priority</tt> - Enqueues the email with the specified priority
     #
-    # By default, the email will be enqueued using <tt>ActionMailer::DeliveryJob</tt>. Each
+    # By default, the email will be enqueued using <tt>ActionMailer::MailDeliveryJob</tt>. Each
     # <tt>ActionMailer::Base</tt> class can specify the job to use by setting the class variable
     # +delivery_job+.
     #
@@ -145,9 +145,6 @@ module ActionMailer
           if use_new_args?(job)
             job.set(options).perform_later(
               @mailer_class.name, @action.to_s, delivery_method.to_s, args: @args)
-          elsif job <= DeliveryJob
-            job.set(options).perform_later(
-              @mailer_class.name, @action.to_s, delivery_method.to_s, *@args)
           else
             ActiveSupport::Deprecation.warn(<<~EOM)
               In Rails 7.0, Action Mailer will pass the mail arguments inside the `:args` keyword argument.
