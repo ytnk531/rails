@@ -1,3 +1,7 @@
+*   Remove deprecated `ActionDispatch::Response.return_only_media_type_on_content_type`.
+
+    *Rafael Mendonça França*
+
 *   Treat html suffix in controller translation.
 
     *Rui Onodera*, *Gavin Miller*
